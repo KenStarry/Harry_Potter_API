@@ -1,6 +1,6 @@
 package com.example.harrypotter.core.domain.model
 
-data class Character(
+data class CharacterModel(
     val actor: String,
     val alive: Boolean,
     val alternate_actors: List<String>,
