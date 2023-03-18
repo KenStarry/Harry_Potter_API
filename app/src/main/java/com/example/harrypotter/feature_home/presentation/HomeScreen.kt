@@ -4,12 +4,11 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleOwner
 import com.example.harrypotter.core.domain.model.CoreEvents
 import com.example.harrypotter.core.presentation.viewmodel.CoreViewModel
 
 @Composable
-fun MainScreen() {
+fun HomeScreen() {
 
     val coreVM: CoreViewModel = hiltViewModel()
     val lifeCyclerOwner = LocalLifecycleOwner.current
@@ -18,11 +17,18 @@ fun MainScreen() {
 
     coreVM.harryPotterCharacters.observe(lifeCyclerOwner) { response ->
 
-        response.body()?.forEachIndexed { index, character ->
-            Log.d("response", character.id)
-            Log.d("response", character.name)
-            Log.d("response", character.house)
+        response.body()?.get(0)?.let {
+            Log.d("response", it.name)
+            Log.d("response", it.house)
+            Log.d("response", it.actor)
+            Log.d("response", it.eyeColour)
         }
+
+//        response.body()?.forEachIndexed { index, character ->
+//            Log.d("response", character.id)
+//            Log.d("response", character.name)
+//            Log.d("response", character.house)
+//        }
 
     }
 }

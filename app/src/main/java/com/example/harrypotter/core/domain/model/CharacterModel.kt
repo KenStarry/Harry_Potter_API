@@ -1,6 +1,8 @@
 package com.example.harrypotter.core.domain.model
 
 data class CharacterModel(
+    val id: String,
+    val image: String,
     val actor: String,
     val alive: Boolean,
     val alternate_actors: List<String>,
@@ -13,8 +15,6 @@ data class CharacterModel(
     val hogwartsStaff: Boolean,
     val hogwartsStudent: Boolean,
     val house: String,
-    val id: String,
-    val image: String,
     val name: String,
     val patronus: String,
     val species: String,
