@@ -1,6 +1,6 @@
 package com.example.harrypotter.core.domain.use_case
 
-import com.example.harrypotter.core.domain.repository.HarryPotterApi
+import com.example.harrypotter.core.data.HarryPotterApi
 
 class GetCharacters(
     private val harryPotterApi: HarryPotterApi

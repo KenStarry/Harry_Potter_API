@@ -1,4 +1,4 @@
-package com.example.harrypotter.core.domain.repository
+package com.example.harrypotter.core.data
 
 import com.example.harrypotter.core.domain.model.CharacterModel
 import com.example.harrypotter.core.presentation.util.Constants.Companion.CHARACTERS_ENDPOINT
