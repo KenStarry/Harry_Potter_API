@@ -17,11 +17,14 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
+import com.kenstarry.harrypotter.navigation.Direction
+import com.kenstarry.harrypotter.navigation.screens.Screens
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun WizardsSection(
     modifier: Modifier = Modifier,
+    direction: Direction,
     allWizards: List<CharacterModel>
 ) {
 
@@ -47,7 +50,13 @@ fun WizardsSection(
                     CharacterItem(
                         character = character,
                         onHouseClicked = {},
-                        onCharacterClicked = {}
+                        onCharacterClicked = {
+                            //  open detail screen
+                            direction.navigateToRoute(
+                                Screens.Detail.route,
+                                null
+                            )
+                        }
                     )
                 }
             },

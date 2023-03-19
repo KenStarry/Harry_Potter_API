@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun DetailScreen(
     navHostController: NavHostController,
-    characterIndex: String
+    characterId: String
 ) {
 
 

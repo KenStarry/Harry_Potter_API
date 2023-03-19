@@ -17,14 +17,18 @@ import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.HomeTopBar
+import com.kenstarry.harrypotter.navigation.Direction
 import java.util.*
 
 @Composable
 fun HomeScreen(
+    mainNavHostController: NavHostController,
     navHostController: NavHostController
 ) {
 
     val coreVM: CoreViewModel = hiltViewModel()
+    val direction = Direction(mainNavHostController)
+    val directionInner = Direction(navHostController)
     val lifeCyclerOwner = LocalLifecycleOwner.current
 
     val allCharacters = remember {
@@ -90,6 +94,7 @@ fun HomeScreen(
 
                     WizardsSection(
                         allWizards = allCharacters.value.filter { it.wizard },
+                        direction = direction,
                         modifier = Modifier
                             .wrapContentHeight()
                     )

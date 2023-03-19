@@ -21,7 +21,10 @@ fun MainInnerGraph(
     ) {
 
         composable(route = BottomNavScreens.Home.route) {
-            HomeScreen(navHostController)
+            HomeScreen(
+                mainNavHostController,
+                navHostController
+            )
         }
 
         composable(route = BottomNavScreens.Characters.route) {

@@ -1,9 +1,7 @@
 package com.kenstarry.harrypotter.navigation.graphs
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.kenstarry.harrypotter.feature_detail.presentation.DetailScreen
 import com.kenstarry.harrypotter.feature_main_screen.presentation.MainScreen
 import com.kenstarry.harrypotter.navigation.NavConstants
@@ -23,8 +21,18 @@ fun NavGraphBuilder.mainNavGraph(
             MainScreen(navHostController)
         }
 
-        composable(route = Screens.Detail.route) {
-            DetailScreen(navHostController)
+        composable(
+            route = Screens.Detail.route,
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            DetailScreen(
+                navHostController = navHostController,
+                characterId = it.arguments?.getString("id") ?: ""
+            )
         }
 
     }
