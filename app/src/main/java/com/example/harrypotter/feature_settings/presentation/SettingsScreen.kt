@@ -1,10 +1,10 @@
-package com.example.harrypotter.feature_main_screen
+package com.example.harrypotter.feature_settings.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 
 @Composable
-fun MainScreen(
+fun SettingsScreen(
     navHostController: NavHostController
 ) {
 

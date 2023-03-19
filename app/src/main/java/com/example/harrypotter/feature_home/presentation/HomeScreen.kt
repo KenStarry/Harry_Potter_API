@@ -4,11 +4,14 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.harrypotter.core.domain.model.CoreEvents
 import com.example.harrypotter.core.presentation.viewmodel.CoreViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navHostController: NavHostController
+) {
 
     val coreVM: CoreViewModel = hiltViewModel()
     val lifeCyclerOwner = LocalLifecycleOwner.current
