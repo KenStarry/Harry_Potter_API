@@ -9,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
+import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 
 @Composable
 fun HomeScreen(
@@ -17,15 +18,9 @@ fun HomeScreen(
 
     val coreVM: CoreViewModel = hiltViewModel()
     val lifeCyclerOwner = LocalLifecycleOwner.current
-    val myObserver = remember {
+    val responseObserver = remember {
 
-    }
-
-    coreVM.onEvent(CoreEvents.GetCharacters)
-
-    DisposableEffect(lifeCyclerOwner, coreVM) {
-        coreVM.harryPotterCharacters.observe(lifeCyclerOwner) { response ->
-
+        ResponseObserver(){ response ->
             response.body()?.get(0)?.let {
                 Log.d("response", it.name)
                 Log.d("response", it.house)
@@ -34,8 +29,15 @@ fun HomeScreen(
             }
         }
 
+    }
+
+    coreVM.onEvent(CoreEvents.GetCharacters)
+
+    DisposableEffect(lifeCyclerOwner, coreVM) {
+        coreVM.harryPotterCharacters.observe(lifeCyclerOwner, responseObserver)
+
         onDispose {
-            coreVM.harryPotterCharacters.removeObserver()
+            coreVM.harryPotterCharacters.removeObserver(responseObserver)
         }
     }
 }
