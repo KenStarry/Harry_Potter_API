@@ -14,7 +14,7 @@ fun HomeTopBar(
     onMore: () -> Unit
 ) {
 
-    LargeTopAppBar(
+    MediumTopAppBar(
         title = {
             Text(
                 text = "Hogwarts",
@@ -23,7 +23,7 @@ fun HomeTopBar(
             )
         },
 
-        colors = TopAppBarDefaults.largeTopAppBarColors(
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.onPrimary,
             titleContentColor = MaterialTheme.colorScheme.secondary
         ),

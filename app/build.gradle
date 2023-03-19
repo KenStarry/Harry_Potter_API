@@ -63,6 +63,9 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
+    //  Palette api
+    implementation('androidx.palette:palette:1.0.0')
+
     //  accompanist libraru
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
     //  Pager Library

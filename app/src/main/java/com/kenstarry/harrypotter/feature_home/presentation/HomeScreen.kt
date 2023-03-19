@@ -1,10 +1,7 @@
 package com.kenstarry.harrypotter.feature_home.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -91,9 +88,10 @@ fun HomeScreen(
                 ) {
 
                     WizardsSection(
-                        allWizards = allCharacters.value.filter { it.wizard },
+                        allWizards = allCharacters.value.filter { it.wizard }
+                            .take(10),
                         modifier = Modifier
-                            .fillMaxSize()
+                            .wrapContentHeight()
                     )
                 }
             }
