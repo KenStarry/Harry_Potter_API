@@ -17,10 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.canopas.lib.showcase.IntroShowCaseScaffold
+import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
+import com.kenstarry.harrypotter.feature_home.presentation.components.CharactersSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.HomeTopBar
+import retrofit2.Response
 
 @Composable
 fun HomeScreen(
@@ -30,15 +33,22 @@ fun HomeScreen(
     val coreVM: CoreViewModel = hiltViewModel()
     val lifeCyclerOwner = LocalLifecycleOwner.current
 
+    val allCharacters = remember {
+        mutableStateOf<List<CharacterModel>>(emptyList())
+    }
+
     val responseObserver = remember {
 
         ResponseObserver() { response ->
-            response.body()?.get(0)?.let {
-                Log.d("response", it.name)
-                Log.d("response", it.house)
-                Log.d("response", it.actor)
-                Log.d("response", it.eyeColour)
+            response.body()?.let {
+                allCharacters.value = it
             }
+//            response.body()?.get(0)?.let {
+//                Log.d("response", it.name)
+//                Log.d("response", it.house)
+//                Log.d("response", it.actor)
+//                Log.d("response", it.eyeColour)
+//            }
         }
 
     }
@@ -84,7 +94,11 @@ fun HomeScreen(
                         .padding(16.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-
+                    CharactersSection(
+                        allCharacters = allCharacters.value,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
                 }
             }
         }
