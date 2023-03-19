@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.harrypotter'
+    namespace 'com.kenstarry.harrypotter'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.harrypotter"
+        applicationId "com.kenstarry.harrypotter"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -62,6 +62,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
+    //  accompanist libraru
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
 
     //  dagger hilt
     implementation("com.google.dagger:hilt-android:2.44")
