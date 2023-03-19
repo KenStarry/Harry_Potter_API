@@ -86,11 +86,8 @@ fun HomeScreen(
                 ) {
 
                 }
-
             }
-
         }
-
     }
 }
 
