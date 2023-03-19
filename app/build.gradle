@@ -65,6 +65,10 @@ dependencies {
 
     //  accompanist libraru
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
+    //  Pager Library
+    implementation "com.google.accompanist:accompanist-pager:0.19.0"
+    // If using indicators, also depend on
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.19.0"
 
     //  dagger hilt
     implementation("com.google.dagger:hilt-android:2.44")

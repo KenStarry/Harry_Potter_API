@@ -17,6 +17,6 @@ val BackgroundDark = Color(0xff2d2e2e)
 val BackgroundDarkAlt = Color(0xff0f0f0f)
 
 val accent = Color(0xffffb5a7)
-val accentLight = Color(0xfffcd5ce)
+val accentLight = Color(0xfffcd5ce).copy(alpha = 0.5f)
 val TextColorBlack = Color.Black
 val TextColorWhite = Color.White

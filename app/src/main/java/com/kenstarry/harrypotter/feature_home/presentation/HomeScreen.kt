@@ -1,13 +1,10 @@
 package com.kenstarry.harrypotter.feature_home.presentation
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -21,9 +18,8 @@ import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
-import com.kenstarry.harrypotter.feature_home.presentation.components.CharactersSection
+import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.HomeTopBar
-import retrofit2.Response
 
 @Composable
 fun HomeScreen(
@@ -92,10 +88,10 @@ fun HomeScreen(
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.onPrimary)
                         .padding(16.dp)
-                        .verticalScroll(rememberScrollState())
                 ) {
-                    CharactersSection(
-                        allCharacters = allCharacters.value,
+
+                    WizardsSection(
+                        allWizards = allCharacters.value.filter { it.wizard },
                         modifier = Modifier
                             .fillMaxSize()
                     )
