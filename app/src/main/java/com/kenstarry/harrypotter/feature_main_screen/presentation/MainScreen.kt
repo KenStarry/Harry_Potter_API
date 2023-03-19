@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.canopas.lib.showcase.IntroShowCaseScaffold
+import com.kenstarry.harrypotter.feature_main_screen.presentation.components.bottom_sheet.MainBottomNav
 import com.kenstarry.harrypotter.navigation.graphs.inner_graphs.MainInnerGraph
 
 @Composable
@@ -30,7 +31,9 @@ fun MainScreen(
     ) {
 
         Scaffold(
-            bottomBar = {}
+            bottomBar = {
+                MainBottomNav(navHostController = navController)
+            }
         ) { contentPadding ->
 
             Box(

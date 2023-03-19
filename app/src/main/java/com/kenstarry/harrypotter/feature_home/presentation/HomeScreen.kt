@@ -2,6 +2,8 @@ package com.kenstarry.harrypotter.feature_home.presentation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -15,23 +17,25 @@ fun HomeScreen(
 
     val coreVM: CoreViewModel = hiltViewModel()
     val lifeCyclerOwner = LocalLifecycleOwner.current
+    val myObserver = remember {
+
+    }
 
     coreVM.onEvent(CoreEvents.GetCharacters)
 
-    coreVM.harryPotterCharacters.observe(lifeCyclerOwner) { response ->
+    DisposableEffect(lifeCyclerOwner, coreVM) {
+        coreVM.harryPotterCharacters.observe(lifeCyclerOwner) { response ->
 
-        response.body()?.get(0)?.let {
-            Log.d("response", it.name)
-            Log.d("response", it.house)
-            Log.d("response", it.actor)
-            Log.d("response", it.eyeColour)
+            response.body()?.get(0)?.let {
+                Log.d("response", it.name)
+                Log.d("response", it.house)
+                Log.d("response", it.actor)
+                Log.d("response", it.eyeColour)
+            }
         }
 
-//        response.body()?.forEachIndexed { index, character ->
-//            Log.d("response", character.id)
-//            Log.d("response", character.name)
-//            Log.d("response", character.house)
-//        }
-
+        onDispose {
+            coreVM.harryPotterCharacters.removeObserver()
+        }
     }
 }

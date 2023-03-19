@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.kenstarry.harrypotter.feature_characters.presentation.CharactersScreen
 import com.kenstarry.harrypotter.feature_home.presentation.HomeScreen
 import com.kenstarry.harrypotter.feature_settings.presentation.SettingsScreen
-import com.kenstarry.harrypotter.navigation.screens.BottomSheetScreens
+import com.kenstarry.harrypotter.navigation.screens.BottomNavScreens
 
 @Composable
 fun MainInnerGraph(
@@ -17,18 +17,18 @@ fun MainInnerGraph(
 
     NavHost(
         navController = navHostController,
-        startDestination = BottomSheetScreens.Home.route
+        startDestination = BottomNavScreens.Home.route
     ) {
 
-        composable(route = BottomSheetScreens.Home.route) {
+        composable(route = BottomNavScreens.Home.route) {
             HomeScreen(navHostController)
         }
 
-        composable(route = BottomSheetScreens.Characters.route) {
+        composable(route = BottomNavScreens.Characters.route) {
             CharactersScreen(navHostController)
         }
 
-        composable(route = BottomSheetScreens.Settings.route) {
+        composable(route = BottomNavScreens.Settings.route) {
             SettingsScreen(navHostController)
         }
 

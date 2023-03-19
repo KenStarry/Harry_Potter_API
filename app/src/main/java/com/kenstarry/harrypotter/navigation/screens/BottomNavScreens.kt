@@ -7,25 +7,25 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.kenstarry.harrypotter.navigation.NavConstants
 
-sealed class BottomSheetScreens(
+sealed class BottomNavScreens(
     val route: String,
     val icon: ImageVector,
     val title: String
 ) {
 
-    object Home : BottomSheetScreens(
+    object Home : BottomNavScreens(
         route = NavConstants.HOME_SCREEN_ROUTE,
         icon = Icons.Outlined.Home,
         title = "Home"
     )
 
-    object Characters : BottomSheetScreens(
+    object Characters : BottomNavScreens(
         route = NavConstants.CHARACTER_SCREEN_ROUTE,
         icon = Icons.Outlined.Movie,
         title = "Characters"
     )
 
-    object Settings : BottomSheetScreens(
+    object Settings : BottomNavScreens(
         route = NavConstants.SETTINGS_SCREEN_ROUTE,
         icon = Icons.Outlined.Settings,
         title = "Settings"
