@@ -1,6 +1,8 @@
 package com.kenstarry.harrypotter.feature_home.presentation.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +25,7 @@ fun WizardsSection(
     allWizards: List<CharacterModel>
 ) {
 
-    val pagerState = rememberPagerState()
+    val listState = rememberLazyListState()
 
     Column(
         modifier = modifier,
@@ -39,27 +41,21 @@ fun WizardsSection(
             color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)
         )
 
-        //  horizontal pager
-        HorizontalPager(
-            count = allWizards.size,
-            state = pagerState,
-            itemSpacing = 16.dp,
+        LazyRow(
+            content = {
+                items(allWizards) { character ->
+                    CharacterItem(
+                        character = character,
+                        onHouseClicked = {},
+                        onCharacterClicked = {}
+                    )
+                }
+            },
+            state = listState,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
-        ) {
-            CharacterItem(character = allWizards[it])
-        }
-
-        //  horizontal indicator
-        HorizontalPagerIndicator(
-            pagerState = pagerState,
-            activeColor = MaterialTheme.colorScheme.primary,
-            inactiveColor = MaterialTheme.colorScheme.tertiary,
-            spacing = 8.dp,
-            indicatorWidth = 5.dp,
-            indicatorHeight = 5.dp,
-            indicatorShape = CircleShape
+                .height(250.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         )
 
     }
