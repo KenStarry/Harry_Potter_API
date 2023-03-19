@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import com.canopas.lib.showcase.IntroShowCaseScaffold
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
+import com.kenstarry.harrypotter.core.presentation.components.WizardsShimmer
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSection
@@ -41,12 +42,6 @@ fun HomeScreen(
             response.body()?.let {
                 allCharacters.value = it
             }
-//            response.body()?.get(0)?.let {
-//                Log.d("response", it.name)
-//                Log.d("response", it.house)
-//                Log.d("response", it.actor)
-//                Log.d("response", it.eyeColour)
-//            }
         }
 
     }
@@ -92,12 +87,19 @@ fun HomeScreen(
                         .padding(16.dp)
                 ) {
 
-                    WizardsSection(
-                        allWizards = allCharacters.value.filter { it.wizard },
-                        direction = direction,
-                        modifier = Modifier
-                            .wrapContentHeight()
-                    )
+//                    WizardsShimmer()
+
+                    if (allCharacters.value.isEmpty()) {
+                        //  show shimmer effect
+                        WizardsShimmer()
+                    } else {
+                        WizardsSection(
+                            allWizards = allCharacters.value.filter { it.wizard },
+                            direction = direction,
+                            modifier = Modifier
+                                .wrapContentHeight()
+                        )
+                    }
                 }
             }
         }

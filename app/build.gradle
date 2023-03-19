@@ -63,6 +63,9 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
+    //  Shimmer
+    implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.4'
+
     //  Palette api
     implementation('androidx.palette:palette:1.0.0')
 
