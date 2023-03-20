@@ -15,10 +15,22 @@ class MyInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        val request = chain.request()
+        var request = chain.request()
 
         try {
-            return chain.proceed(request)
+            var response = chain.proceed(request)
+            var tryCount = 0
+            val maxTries = 5
+
+            while (!response.isSuccessful && tryCount < maxTries) {
+                tryCount++
+
+                Thread.sleep(1000)
+                request = request.newBuilder().build()
+                response = chain.proceed(request)
+            }
+
+            return response
 
         } catch (e: Exception) {
             e.printStackTrace()

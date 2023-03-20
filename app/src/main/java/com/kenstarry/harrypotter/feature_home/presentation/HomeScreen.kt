@@ -62,20 +62,6 @@ fun HomeScreen(
 
                 isErrorVisible.value = true
             }
-
-            when (val msg = response.message()) {
-                Constants.SOCKET_TIMEOUT_MSG,
-                Constants.UNKNOWN_HOST_MSG,
-                Constants.CONNECTION_SHUTDOWN_MSG,
-                Constants.IO_EXCEPTION_MSG -> {
-                    //  error message
-
-                }
-                else -> {
-
-                }
-            }
-
             Log.d("interceptor", response.message())
         }
 
