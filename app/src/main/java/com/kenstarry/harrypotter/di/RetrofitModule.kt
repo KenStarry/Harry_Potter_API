@@ -23,9 +23,9 @@ object RetrofitModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient
         .Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(2, TimeUnit.SECONDS)
+        .readTimeout(2, TimeUnit.SECONDS)
+        .writeTimeout(2, TimeUnit.SECONDS)
         .addInterceptor(MyInterceptor())
         .build()
 
