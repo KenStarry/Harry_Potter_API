@@ -53,7 +53,7 @@ fun WizardsSection(
                         onCharacterClicked = {
                             //  open detail screen
                             direction.navigateToRoute(
-                                Screens.Detail.route,
+                                Screens.Detail.passCharacterId(character.id),
                                 null
                             )
                         }

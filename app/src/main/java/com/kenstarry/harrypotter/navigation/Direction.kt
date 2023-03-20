@@ -19,4 +19,8 @@ class Direction(
          } else
              navHostController.navigate(route = route)
     }
+
+    val navigateUp: () -> Unit = {
+        navHostController.navigateUp()
+    }
 }
