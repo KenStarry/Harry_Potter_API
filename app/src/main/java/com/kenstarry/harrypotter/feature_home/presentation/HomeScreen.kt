@@ -1,6 +1,7 @@
 package com.kenstarry.harrypotter.feature_home.presentation
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -15,8 +16,10 @@ import com.canopas.lib.showcase.IntroShowCaseScaffold
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.components.WizardsShimmer
+import com.kenstarry.harrypotter.core.presentation.util.Constants
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
+import com.kenstarry.harrypotter.feature_home.presentation.components.ErrorMessage
 import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.HomeTopBar
 import com.kenstarry.harrypotter.navigation.Direction
@@ -37,16 +40,40 @@ fun HomeScreen(
         mutableStateOf<List<CharacterModel>>(emptyList())
     }
 
+    val isErrorVisible = remember {
+        mutableStateOf(false)
+    }
+
     val responseObserver = remember {
 
         ResponseObserver() { response ->
 
-            when (response.message()) {
+            if (response.isSuccessful) {
 
+                //  show main UI
+                isErrorVisible.value = false
+
+                response.body()?.let {
+                    allCharacters.value = it
+                }
+
+            } else {
+                val responseMsg = response.message()
+
+                isErrorVisible.value = true
             }
 
-            response.body()?.let {
-                allCharacters.value = it
+            when (val msg = response.message()) {
+                Constants.SOCKET_TIMEOUT_MSG,
+                Constants.UNKNOWN_HOST_MSG,
+                Constants.CONNECTION_SHUTDOWN_MSG,
+                Constants.IO_EXCEPTION_MSG -> {
+                    //  error message
+
+                }
+                else -> {
+
+                }
             }
 
             Log.d("interceptor", response.message())
@@ -68,45 +95,53 @@ fun HomeScreen(
         mutableStateOf(false)
     }
 
-    IntroShowCaseScaffold(
-        showIntroShowCase = showAppIntro,
-        onShowCaseCompleted = { showAppIntro = false }
-    ) {
+    //  check for error message
 
-        Scaffold(
-            topBar = {
-                HomeTopBar(
-                    onSearch = {},
-                    onMore = {}
-                )
-            }
-        ) { contentPadding ->
+    AnimatedVisibility(visible = isErrorVisible.value) {
+        ErrorMessage(message = "Connection timed out")
+    }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(contentPadding)
-            ) {
+    AnimatedVisibility(visible = !isErrorVisible.value) {
+        IntroShowCaseScaffold(
+            showIntroShowCase = showAppIntro,
+            onShowCaseCompleted = { showAppIntro = false }
+        ) {
 
-                Column(
+            Scaffold(
+                topBar = {
+                    HomeTopBar(
+                        onSearch = {},
+                        onMore = {}
+                    )
+                }
+            ) { contentPadding ->
+
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.onPrimary)
-                        .padding(16.dp)
+                        .padding(contentPadding)
                 ) {
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.onPrimary)
+                            .padding(16.dp)
+                    ) {
 
 //                    WizardsShimmer()
 
-                    if (allCharacters.value.isEmpty()) {
-                        //  show shimmer effect
-                        WizardsShimmer()
-                    } else {
-                        WizardsSection(
-                            allWizards = allCharacters.value.filter { it.wizard },
-                            direction = direction,
-                            modifier = Modifier
-                                .wrapContentHeight()
-                        )
+                        if (allCharacters.value.isEmpty()) {
+                            //  show shimmer effect
+                            WizardsShimmer()
+                        } else {
+                            WizardsSection(
+                                allWizards = allCharacters.value.filter { it.wizard },
+                                direction = direction,
+                                modifier = Modifier
+                                    .wrapContentHeight()
+                            )
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.kenstarry.harrypotter.core.data
 
+import com.kenstarry.harrypotter.core.presentation.util.Constants
 import okhttp3.Interceptor
 import okhttp3.Protocol
 import okhttp3.Response
@@ -25,16 +26,16 @@ class MyInterceptor : Interceptor {
 
             when (e) {
                 is SocketTimeoutException -> {
-                    msg = "Timeout, please check your internet connection."
+                    msg = Constants.SOCKET_TIMEOUT_MSG
                 }
                 is UnknownHostException -> {
-                    msg = "Unable to make a connection. Check your internet connection"
+                    msg = Constants.UNKNOWN_HOST_MSG
                 }
                 is ConnectionShutdownException -> {
-                    msg = "Connection Shut down, please check internet connection"
+                    msg = Constants.CONNECTION_SHUTDOWN_MSG
                 }
                 is IOException -> {
-                    msg = "Server is unreachable, please try again later."
+                    msg = Constants.IO_EXCEPTION_MSG
                 }
                 is java.lang.IllegalStateException -> {
                     msg = "${e.message}"

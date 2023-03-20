@@ -16,5 +16,11 @@ class Constants {
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
             'U', 'V', 'W', 'X', 'Y', 'Z'
         )
+
+        //  error messages
+        const val SOCKET_TIMEOUT_MSG = "Timeout, please check your internet connection."
+        const val UNKNOWN_HOST_MSG = "Unable to make a connection. Check your internet connection"
+        const val CONNECTION_SHUTDOWN_MSG = "Connection Shut down, please check internet connection"
+        const val IO_EXCEPTION_MSG = "Server is unreachable, please try again later."
     }
 }
