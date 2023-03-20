@@ -2,8 +2,7 @@ package com.kenstarry.harrypotter.di
 
 import com.kenstarry.harrypotter.core.data.HarryPotterApi
 import com.kenstarry.harrypotter.core.data.MyInterceptor
-import com.kenstarry.harrypotter.core.domain.use_case.GetCharacters
-import com.kenstarry.harrypotter.core.domain.use_case.HarryPotterUseCases
+import com.kenstarry.harrypotter.core.domain.use_case.*
 import com.kenstarry.harrypotter.core.presentation.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -50,7 +49,11 @@ object RetrofitModule {
     fun provideHarryPotterUseCases(
         harryPotterApi: HarryPotterApi
     ) = HarryPotterUseCases(
-        getCharacters = GetCharacters(harryPotterApi)
+        getCharacters = GetCharacters(harryPotterApi),
+        getStudents = GetStudents(harryPotterApi),
+        getAllStaff = GetAllStaff(harryPotterApi),
+        getSpells = GetSpells(harryPotterApi),
+        getCharacter = GetCharacter(harryPotterApi)
     )
 }
 

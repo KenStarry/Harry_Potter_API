@@ -22,7 +22,6 @@ fun DetailScreen(
     characterId: String
 ) {
 
-
     val direction = Direction(navHostController)
     var showAppIntro by remember {
         mutableStateOf(false)
