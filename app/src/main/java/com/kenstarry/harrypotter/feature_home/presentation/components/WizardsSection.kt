@@ -38,7 +38,7 @@ fun WizardsSection(
 
         //  title
         Text(
-            text = "Wizards",
+            text = "Top Wizards",
             fontSize = MaterialTheme.typography.titleMedium.fontSize,
             fontWeight = FontWeight.ExtraBold,
             color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)

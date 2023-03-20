@@ -20,26 +20,29 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PillBtn(
     title: String,
-    icon: ImageVector? = null,
-    horizontalSpacing: Dp = 16.dp,
-    verticalSpacing: Dp = 16.dp,
+    textColor: Color = Color.Black,
+    startIcon: ImageVector? = null,
+    endIcon: ImageVector? = null,
+    containerColor: Color = MaterialTheme.colorScheme.tertiary,
+    horizontalPadding: Dp = 16.dp,
+    verticalPadding: Dp = 16.dp,
     onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(32.dp))
             .wrapContentSize()
-            .background(MaterialTheme.colorScheme.tertiary)
+            .background(containerColor)
             .clickable { onClick() }
             .padding(
-                horizontal = horizontalSpacing,
-                vertical = verticalSpacing
+                horizontal = horizontalPadding,
+                vertical = verticalPadding
             ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        icon?.let {
+        startIcon?.let {
             Icon(
                 imageVector = it,
                 contentDescription = "Pill icon",
@@ -53,8 +56,18 @@ fun PillBtn(
             text = title,
             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
             fontWeight = FontWeight.SemiBold,
-            color = Color.Black
+            color = textColor
         )
+
+        endIcon?.let {
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Icon(
+                imageVector = it,
+                contentDescription = "Pill icon",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
 
     }
 }

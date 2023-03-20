@@ -20,6 +20,7 @@ import com.kenstarry.harrypotter.core.presentation.util.Constants
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.ErrorMessage
+import com.kenstarry.harrypotter.feature_home.presentation.components.HogwartsStaffSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.HomeTopBar
 import com.kenstarry.harrypotter.navigation.Direction
@@ -112,20 +113,27 @@ fun HomeScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(MaterialTheme.colorScheme.onPrimary)
-                            .padding(16.dp)
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(24.dp)
                     ) {
 
-//                    WizardsShimmer()
-
+                        //  wizards section
                         if (allCharacters.value.isEmpty()) {
-                            //  show shimmer effect
+                            //  show shimmer effects
                             WizardsShimmer()
                         } else {
+                            //  wizards section
                             WizardsSection(
                                 allWizards = allCharacters.value.filter { it.wizard },
                                 direction = direction,
                                 modifier = Modifier
                                     .wrapContentHeight()
+                            )
+
+                            //  hogwarts staff section
+                            HogwartsStaffSection(
+                                allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
+                                direction = direction
                             )
                         }
                     }
