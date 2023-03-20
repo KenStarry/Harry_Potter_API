@@ -1,5 +1,6 @@
 package com.kenstarry.harrypotter.feature_home.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -39,9 +40,16 @@ fun HomeScreen(
     val responseObserver = remember {
 
         ResponseObserver() { response ->
+
+            when (response.message()) {
+
+            }
+
             response.body()?.let {
                 allCharacters.value = it
             }
+
+            Log.d("interceptor", response.message())
         }
 
     }
