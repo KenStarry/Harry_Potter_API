@@ -16,15 +16,14 @@ import com.canopas.lib.showcase.IntroShowCaseScaffold
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.components.WizardsShimmer
-import com.kenstarry.harrypotter.core.presentation.util.Constants
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
+import com.kenstarry.harrypotter.feature_detail.domain.model.CharacterObserver
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.ErrorMessage
 import com.kenstarry.harrypotter.feature_home.presentation.components.HogwartsStaffSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSection
 import com.kenstarry.harrypotter.feature_home.presentation.components.HomeTopBar
 import com.kenstarry.harrypotter.navigation.Direction
-import java.util.*
 
 @Composable
 fun HomeScreen(
