@@ -30,7 +30,7 @@ fun PillBtn(
 ) {
     Row(
         modifier = Modifier
-            .clip(RoundedCornerShape(32.dp))
+            .clip(RoundedCornerShape(48.dp))
             .wrapContentSize()
             .background(containerColor)
             .clickable { onClick() }
