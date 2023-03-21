@@ -74,7 +74,7 @@ class CoreViewModel @Inject constructor(
             is BottomSheetEvents.OpenBottomSheet<*> -> {
 
                 event.scope.launch {
-                    event.state.show()
+                    event.state.animateTo(ModalBottomSheetValue.Expanded)
                 }
 
                 viewModelScope.launch {
@@ -86,7 +86,7 @@ class CoreViewModel @Inject constructor(
 
             is BottomSheetEvents.CloseBottomSheet -> {
                 event.scope.launch {
-                    event.state.hide()
+                    event.state.animateTo(ModalBottomSheetValue.Hidden)
                 }
             }
         }

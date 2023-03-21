@@ -1,12 +1,15 @@
 package com.kenstarry.harrypotter.feature_main_screen.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -25,7 +28,7 @@ import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
 import com.kenstarry.harrypotter.feature_main_screen.presentation.components.bottom_sheet.MainBottomNav
 import com.kenstarry.harrypotter.navigation.graphs.inner_graphs.MainInnerGraph
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     navHostController: NavHostController
@@ -33,6 +36,7 @@ fun MainScreen(
 
     val navController = rememberNavController()
     val coreVM: CoreViewModel = hiltViewModel()
+    val context = LocalContext.current
 
     var showAppIntro by remember {
         mutableStateOf(false)
@@ -40,6 +44,8 @@ fun MainScreen(
 
     BottomSheet(
         sheetBackground = MaterialTheme.colorScheme.onPrimary,
+        topStartRadius = 0.dp,
+        topEndRadius = 0.dp,
         sheetContent = { state, scope ->
 
             when (coreVM.bottomSheetContent.value) {
@@ -74,6 +80,7 @@ fun MainScreen(
                         MainInnerGraph(
                             mainNavHostController = navHostController,
                             navHostController = navController,
+                            coreViewModel = coreVM,
                             modalSheetState = state,
                             scope = scope
                         )

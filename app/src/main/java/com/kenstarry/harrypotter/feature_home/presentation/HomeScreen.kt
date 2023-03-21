@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -28,16 +29,17 @@ import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
 import com.kenstarry.harrypotter.navigation.Direction
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     mainNavHostController: NavHostController,
     navHostController: NavHostController,
+    coreVM: CoreViewModel,
     state: ModalBottomSheetState,
     scope: CoroutineScope
 ) {
 
-    val coreVM: CoreViewModel = hiltViewModel()
+//    val coreVM: CoreViewModel = hiltViewModel()
     val direction = Direction(mainNavHostController)
     val directionInner = Direction(navHostController)
     val lifeCyclerOwner = LocalLifecycleOwner.current

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_characters.presentation.CharactersScreen
 import com.kenstarry.harrypotter.feature_home.presentation.HomeScreen
 import com.kenstarry.harrypotter.feature_settings.presentation.SettingsScreen
@@ -17,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 fun MainInnerGraph(
     mainNavHostController: NavHostController,
     navHostController: NavHostController,
+    coreViewModel: CoreViewModel,
     modalSheetState: ModalBottomSheetState,
     scope: CoroutineScope
 ) {
@@ -30,6 +32,7 @@ fun MainInnerGraph(
             HomeScreen(
                 mainNavHostController,
                 navHostController,
+                coreViewModel,
                 state = modalSheetState,
                 scope = scope
             )
