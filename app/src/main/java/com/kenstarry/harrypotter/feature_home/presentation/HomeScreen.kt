@@ -83,58 +83,56 @@ fun HomeScreen(
 
     //  check for error message
 
-    AnimatedVisibility(visible = isErrorVisible.value) {
-        ErrorMessage(message = "Connection timed out")
-    }
+//    AnimatedVisibility(visible = isErrorVisible.value) {
+//        ErrorMessage(message = "Connection timed out")
+//    }
 
-    AnimatedVisibility(visible = !isErrorVisible.value) {
-        IntroShowCaseScaffold(
-            showIntroShowCase = showAppIntro,
-            onShowCaseCompleted = { showAppIntro = false }
-        ) {
+    IntroShowCaseScaffold(
+        showIntroShowCase = showAppIntro,
+        onShowCaseCompleted = { showAppIntro = false }
+    ) {
 
-            Scaffold(
-                topBar = {
-                    HomeTopBar(
-                        onSearch = {},
-                        onMore = {}
-                    )
-                }
-            ) { contentPadding ->
+        Scaffold(
+            topBar = {
+                HomeTopBar(
+                    onSearch = {},
+                    onMore = {}
+                )
+            }
+        ) { contentPadding ->
 
-                Box(
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
+            ) {
+
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(contentPadding)
+                        .background(MaterialTheme.colorScheme.onPrimary)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.onPrimary)
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(24.dp)
-                    ) {
-
+                    //  wizards section
+                    if (allCharacters.value.isEmpty()) {
+                        //  show shimmer effects
+                        WizardsShimmer()
+                    } else {
                         //  wizards section
-                        if (allCharacters.value.isEmpty()) {
-                            //  show shimmer effects
-                            WizardsShimmer()
-                        } else {
-                            //  wizards section
-                            WizardsSection(
-                                allWizards = allCharacters.value.filter { it.wizard },
-                                direction = direction,
-                                modifier = Modifier
-                                    .wrapContentHeight()
-                            )
+                        WizardsSection(
+                            allWizards = allCharacters.value.filter { it.wizard },
+                            direction = direction,
+                            modifier = Modifier
+                                .wrapContentHeight()
+                        )
 
-                            //  hogwarts staff section
-                            HogwartsStaffSection(
-                                allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
-                                direction = direction
-                            )
-                        }
+                        //  hogwarts staff section
+                        HogwartsStaffSection(
+                            allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
+                            direction = direction
+                        )
                     }
                 }
             }

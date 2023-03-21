@@ -1,5 +1,8 @@
 package com.kenstarry.harrypotter.core.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CharacterModel(
     val id: String,
     val image: String,

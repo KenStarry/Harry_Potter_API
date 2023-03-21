@@ -1,5 +1,6 @@
 package com.kenstarry.harrypotter.feature_detail.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,8 +25,10 @@ import com.kenstarry.harrypotter.navigation.Direction
 @Composable
 fun DetailScreen(
     navHostController: NavHostController,
-    characterId: String
+    characterModel: CharacterModel?
 ) {
+
+//    Log.d("model", characterModel.name)
 
     val coreVM: CoreViewModel = hiltViewModel()
     val direction = Direction(navHostController)
@@ -34,8 +37,6 @@ fun DetailScreen(
     var showAppIntro by remember {
         mutableStateOf(false)
     }
-
-    coreVM.onEvent(CoreEvents.GetCharacter(characterId))
 
     val characterDetails = remember {
         mutableStateOf<CharacterModel?>(null)

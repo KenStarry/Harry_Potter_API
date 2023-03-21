@@ -2,10 +2,12 @@ package com.kenstarry.harrypotter.navigation.graphs
 
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.feature_detail.presentation.DetailScreen
 import com.kenstarry.harrypotter.feature_main_screen.presentation.MainScreen
 import com.kenstarry.harrypotter.navigation.NavConstants
 import com.kenstarry.harrypotter.navigation.screens.Screens
+import kotlinx.serialization.json.Json
 
 fun NavGraphBuilder.mainNavGraph(
     navHostController: NavHostController
@@ -24,15 +26,20 @@ fun NavGraphBuilder.mainNavGraph(
         composable(
             route = Screens.Detail.route,
             arguments = listOf(
-                navArgument("id") {
+                navArgument("model") {
                     type = NavType.StringType
                 }
             )
         ) {
             DetailScreen(
                 navHostController = navHostController,
-                characterId = it.arguments?.getString("id") ?: ""
+                characterModel = null
             )
+
+//            Json.decodeFromString(
+//                CharacterModel.serializer(),
+//                it.arguments?.getString("model") ?: ""
+//            )
         }
 
     }

@@ -19,6 +19,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.navigation.Direction
 import com.kenstarry.harrypotter.navigation.screens.Screens
+import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -51,9 +52,15 @@ fun WizardsSection(
                         character = character,
                         onHouseClicked = {},
                         onCharacterClicked = {
+
+//                            val myModelString = Json.encodeToString(
+//                                CharacterModel.serializer(),
+//                                character
+//                            )
+
                             //  open detail screen
                             direction.navigateToRoute(
-                                Screens.Detail.passCharacterId(character.id),
+                                Screens.Detail.route,
                                 null
                             )
                         }
