@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,20 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.HorizontalPagerIndicator
-import com.google.accompanist.pager.rememberPagerState
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.navigation.Direction
-import com.kenstarry.harrypotter.navigation.screens.Screens
-import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun WizardsSection(
     modifier: Modifier = Modifier,
     direction: Direction,
-    allWizards: List<CharacterModel>
+    allWizards: List<CharacterModel>,
+    onWizardClicked: (character: CharacterModel) -> Unit
 ) {
 
     val listState = rememberLazyListState()
@@ -53,16 +48,18 @@ fun WizardsSection(
                         onHouseClicked = {},
                         onCharacterClicked = {
 
+                            onWizardClicked(character)
+
 //                            val myModelString = Json.encodeToString(
 //                                CharacterModel.serializer(),
 //                                character
 //                            )
 
                             //  open detail screen
-                            direction.navigateToRoute(
-                                Screens.Detail.route,
-                                null
-                            )
+//                            direction.navigateToRoute(
+//                                Screens.Detail.route,
+//                                null
+//                            )
                         }
                     )
                 }

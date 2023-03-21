@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -13,18 +14,19 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.canopas.lib.showcase.IntroShowCaseScaffold
+import com.kenstarry.harrypotter.core.domain.model.BottomSheetEvents
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
+import com.kenstarry.harrypotter.core.presentation.components.BottomSheet
 import com.kenstarry.harrypotter.core.presentation.components.WizardsShimmer
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_detail.domain.model.CharacterObserver
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
-import com.kenstarry.harrypotter.feature_home.presentation.components.ErrorMessage
-import com.kenstarry.harrypotter.feature_home.presentation.components.HogwartsStaffSection
-import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSection
-import com.kenstarry.harrypotter.feature_home.presentation.components.HomeTopBar
+import com.kenstarry.harrypotter.feature_home.presentation.components.*
+import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
 import com.kenstarry.harrypotter.navigation.Direction
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     mainNavHostController: NavHostController,
@@ -87,57 +89,88 @@ fun HomeScreen(
 //        ErrorMessage(message = "Connection timed out")
 //    }
 
-    IntroShowCaseScaffold(
-        showIntroShowCase = showAppIntro,
-        onShowCaseCompleted = { showAppIntro = false }
-    ) {
+    BottomSheet(
+        sheetBackground = MaterialTheme.colorScheme.onPrimary,
+        sheetContent = { state, scope ->
 
-        Scaffold(
-            topBar = {
-                HomeTopBar(
-                    onSearch = {},
-                    onMore = {}
-                )
+            when (coreVM.bottomSheetContent.value) {
+
+                HomeConstants.DETAILS_BOTTOM_SHEET -> {
+                    DetailBottomSheet(
+                        character = coreVM.bottomSheetData.value as CharacterModel
+                    )
+                }
             }
-        ) { contentPadding ->
+        },
+        sheetScope = { state, scope ->
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(contentPadding)
+            IntroShowCaseScaffold(
+                showIntroShowCase = showAppIntro,
+                onShowCaseCompleted = { showAppIntro = false }
             ) {
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.onPrimary)
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(24.dp)
-                ) {
+                Scaffold(
+                    topBar = {
+                        HomeTopBar(
+                            onSearch = {},
+                            onMore = {}
+                        )
+                    }
+                ) { contentPadding ->
 
-                    //  wizards section
-                    if (allCharacters.value.isEmpty()) {
-                        //  show shimmer effects
-                        WizardsShimmer()
-                    } else {
-                        //  wizards section
-                        WizardsSection(
-                            allWizards = allCharacters.value.filter { it.wizard },
-                            direction = direction,
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(contentPadding)
+                    ) {
+
+                        Column(
                             modifier = Modifier
-                                .wrapContentHeight()
-                        )
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.onPrimary)
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(24.dp)
+                        ) {
 
-                        //  hogwarts staff section
-                        HogwartsStaffSection(
-                            allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
-                            direction = direction
-                        )
+                            //  wizards section
+                            if (allCharacters.value.isEmpty()) {
+                                //  show shimmer effects
+                                WizardsShimmer()
+                            } else {
+                                //  wizards section
+                                WizardsSection(
+                                    allWizards = allCharacters.value.filter { it.wizard },
+                                    direction = direction,
+                                    modifier = Modifier
+                                        .wrapContentHeight(),
+                                    onWizardClicked = {
+                                        coreVM.onBottomSheetEvent(
+                                            BottomSheetEvents.OpenBottomSheet(
+                                                state = state,
+                                                scope = scope,
+                                                bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                                bottomSheetData = it
+                                            )
+                                        )
+                                    }
+                                )
+
+                                //  hogwarts staff section
+                                HogwartsStaffSection(
+                                    allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
+                                    direction = direction
+                                )
+                            }
+                        }
                     }
                 }
             }
+
+        },
+        closeBottomSheet = { state, scope ->
+            coreVM.onBottomSheetEvent(BottomSheetEvents.CloseBottomSheet(state, scope))
         }
-    }
+    )
 }
 
 

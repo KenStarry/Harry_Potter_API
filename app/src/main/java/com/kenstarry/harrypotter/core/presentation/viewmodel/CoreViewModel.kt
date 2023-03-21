@@ -1,8 +1,13 @@
 package com.kenstarry.harrypotter.core.presentation.viewmodel
 
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kenstarry.harrypotter.core.domain.model.BottomSheetEvents
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.domain.model.Spell
@@ -22,6 +27,13 @@ class CoreViewModel @Inject constructor(
     val hogwartsStudents = MutableLiveData<Response<List<CharacterModel>>>()
     val hogwartsStaff = MutableLiveData<Response<List<CharacterModel>>>()
     val hogwartsSpells = MutableLiveData<Response<List<Spell>>>()
+
+    //  Bottomsheet
+    private val _bottomSheetContent = mutableStateOf("")
+    val bottomSheetContent: State<String> = _bottomSheetContent
+
+    private val _bottomSheetData = mutableStateOf<Any?>(null)
+    var bottomSheetData: State<Any?> = _bottomSheetData
 
     fun onEvent(event: CoreEvents) {
         when (event) {
@@ -51,6 +63,30 @@ class CoreViewModel @Inject constructor(
             is CoreEvents.GetStudents -> {
                 viewModelScope.launch {
                     hogwartsStudents.value = useCases.getStudents()
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    fun onBottomSheetEvent(event: BottomSheetEvents<*>) {
+        when (event) {
+            is BottomSheetEvents.OpenBottomSheet<*> -> {
+
+                event.scope.launch {
+                    event.state.show()
+                }
+
+                viewModelScope.launch {
+                    _bottomSheetContent.value = event.bottomSheetType
+                    _bottomSheetData.value = event.bottomSheetData
+                }
+
+            }
+
+            is BottomSheetEvents.CloseBottomSheet -> {
+                event.scope.launch {
+                    event.state.hide()
                 }
             }
         }
