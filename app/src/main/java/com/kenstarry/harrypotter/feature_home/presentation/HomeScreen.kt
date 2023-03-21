@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -25,12 +26,15 @@ import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.*
 import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
 import com.kenstarry.harrypotter.navigation.Direction
+import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     mainNavHostController: NavHostController,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    state: ModalBottomSheetState,
+    scope: CoroutineScope
 ) {
 
     val coreVM: CoreViewModel = hiltViewModel()
@@ -89,88 +93,67 @@ fun HomeScreen(
 //        ErrorMessage(message = "Connection timed out")
 //    }
 
-    BottomSheet(
-        sheetBackground = MaterialTheme.colorScheme.onPrimary,
-        sheetContent = { state, scope ->
+    IntroShowCaseScaffold(
+        showIntroShowCase = showAppIntro,
+        onShowCaseCompleted = { showAppIntro = false }
+    ) {
 
-            when (coreVM.bottomSheetContent.value) {
-
-                HomeConstants.DETAILS_BOTTOM_SHEET -> {
-                    DetailBottomSheet(
-                        character = coreVM.bottomSheetData.value as CharacterModel
-                    )
-                }
+        Scaffold(
+            topBar = {
+                HomeTopBar(
+                    onSearch = {},
+                    onMore = {}
+                )
             }
-        },
-        sheetScope = { state, scope ->
+        ) { contentPadding ->
 
-            IntroShowCaseScaffold(
-                showIntroShowCase = showAppIntro,
-                onShowCaseCompleted = { showAppIntro = false }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
             ) {
 
-                Scaffold(
-                    topBar = {
-                        HomeTopBar(
-                            onSearch = {},
-                            onMore = {}
-                        )
-                    }
-                ) { contentPadding ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.onPrimary)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(contentPadding)
-                    ) {
-
-                        Column(
+                    //  wizards section
+                    if (allCharacters.value.isEmpty()) {
+                        //  show shimmer effects
+                        WizardsShimmer()
+                    } else {
+                        //  wizards section
+                        WizardsSection(
+                            allWizards = allCharacters.value.filter { it.wizard },
+                            direction = direction,
                             modifier = Modifier
-                                .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.onPrimary)
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(24.dp)
-                        ) {
-
-                            //  wizards section
-                            if (allCharacters.value.isEmpty()) {
-                                //  show shimmer effects
-                                WizardsShimmer()
-                            } else {
-                                //  wizards section
-                                WizardsSection(
-                                    allWizards = allCharacters.value.filter { it.wizard },
-                                    direction = direction,
-                                    modifier = Modifier
-                                        .wrapContentHeight(),
-                                    onWizardClicked = {
-                                        coreVM.onBottomSheetEvent(
-                                            BottomSheetEvents.OpenBottomSheet(
-                                                state = state,
-                                                scope = scope,
-                                                bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
-                                                bottomSheetData = it
-                                            )
-                                        )
-                                    }
-                                )
-
-                                //  hogwarts staff section
-                                HogwartsStaffSection(
-                                    allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
-                                    direction = direction
+                                .wrapContentHeight(),
+                            onWizardClicked = {
+                                coreVM.onBottomSheetEvent(
+                                    BottomSheetEvents.OpenBottomSheet(
+                                        state = state,
+                                        scope = scope,
+                                        bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                        bottomSheetData = it
+                                    )
                                 )
                             }
-                        }
+                        )
+
+                        //  hogwarts staff section
+                        HogwartsStaffSection(
+                            allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
+                            direction = direction
+                        )
                     }
                 }
             }
-
-        },
-        closeBottomSheet = { state, scope ->
-            coreVM.onBottomSheetEvent(BottomSheetEvents.CloseBottomSheet(state, scope))
         }
-    )
+    }
 }
 
 
