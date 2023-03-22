@@ -39,7 +39,6 @@ fun HomeScreen(
     scope: CoroutineScope
 ) {
 
-//    val coreVM: CoreViewModel = hiltViewModel()
     val direction = Direction(mainNavHostController)
     val directionInner = Direction(navHostController)
     val lifeCyclerOwner = LocalLifecycleOwner.current

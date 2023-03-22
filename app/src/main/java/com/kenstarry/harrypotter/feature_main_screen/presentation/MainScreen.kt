@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,73 +28,53 @@ import com.kenstarry.harrypotter.feature_home.presentation.components.WizardsSec
 import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
 import com.kenstarry.harrypotter.feature_main_screen.presentation.components.bottom_sheet.MainBottomNav
 import com.kenstarry.harrypotter.navigation.graphs.inner_graphs.MainInnerGraph
+import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    coreVM: CoreViewModel,
+    state: ModalBottomSheetState,
+    scope: CoroutineScope
 ) {
 
     val navController = rememberNavController()
-    val coreVM: CoreViewModel = hiltViewModel()
     val context = LocalContext.current
 
     var showAppIntro by remember {
         mutableStateOf(false)
     }
 
-    BottomSheet(
-        sheetBackground = MaterialTheme.colorScheme.onPrimary,
-        topStartRadius = 0.dp,
-        topEndRadius = 0.dp,
-        sheetContent = { state, scope ->
+    IntroShowCaseScaffold(
+        showIntroShowCase = showAppIntro,
+        onShowCaseCompleted = { showAppIntro = false }
+    ) {
 
-            when (coreVM.bottomSheetContent.value) {
-
-                HomeConstants.DETAILS_BOTTOM_SHEET -> {
-                    DetailBottomSheet(
-                        character = coreVM.bottomSheetData.value as CharacterModel
-                    )
-                }
+        Scaffold(
+            bottomBar = {
+                MainBottomNav(navHostController = navController)
             }
-        },
-        sheetScope = { state, scope ->
+        ) { contentPadding ->
 
-            IntroShowCaseScaffold(
-                showIntroShowCase = showAppIntro,
-                onShowCaseCompleted = { showAppIntro = false }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .padding(contentPadding)
             ) {
-
-                Scaffold(
-                    bottomBar = {
-                        MainBottomNav(navHostController = navController)
-                    }
-                ) { contentPadding ->
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.onPrimary)
-                            .padding(contentPadding)
-                    ) {
-                        //  navgraph for the bottom sheets
-                        MainInnerGraph(
-                            mainNavHostController = navHostController,
-                            navHostController = navController,
-                            coreViewModel = coreVM,
-                            modalSheetState = state,
-                            scope = scope
-                        )
-                    }
-
-                }
-
+                //  navgraph for the bottom sheets
+                MainInnerGraph(
+                    mainNavHostController = navHostController,
+                    navHostController = navController,
+                    coreViewModel = coreVM,
+                    modalSheetState = state,
+                    scope = scope
+                )
             }
 
-        },
-        closeBottomSheet = { state, scope ->
-            coreVM.onBottomSheetEvent(BottomSheetEvents.CloseBottomSheet(state, scope))
         }
-    )
+
+    }
 
 }
