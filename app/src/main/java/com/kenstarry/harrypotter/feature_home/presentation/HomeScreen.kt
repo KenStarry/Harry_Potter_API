@@ -1,9 +1,10 @@
 package com.kenstarry.harrypotter.feature_home.presentation
 
 import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,16 +14,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.canopas.lib.showcase.IntroShowCaseScaffold
 import com.kenstarry.harrypotter.core.domain.model.BottomSheetEvents
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
-import com.kenstarry.harrypotter.core.presentation.components.BottomSheet
 import com.kenstarry.harrypotter.core.presentation.components.WizardsShimmer
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
-import com.kenstarry.harrypotter.feature_detail.domain.model.CharacterObserver
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.*
 import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
@@ -119,6 +117,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.onPrimary)
+                        .verticalScroll(rememberScrollState())
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
@@ -143,13 +142,46 @@ fun HomeScreen(
                                         bottomSheetData = it
                                     )
                                 )
+                            },
+                            onHouseClicked = {
+
                             }
                         )
 
                         //  hogwarts staff section
                         HogwartsStaffSection(
                             allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
-                            direction = direction
+                            direction = direction,
+                            onCharacterClicked = {
+                                coreVM.onBottomSheetEvent(
+                                    BottomSheetEvents.OpenBottomSheet(
+                                        state = state,
+                                        scope = scope,
+                                        bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                        bottomSheetData = it
+                                    )
+                                )
+                            },
+                            onHouseClicked = {},
+                            onSeeAll = {}
+                        )
+
+                        //  hogwarts staff section
+                        HogwartsStudentsSection(
+                            allHogwartsStudents = allCharacters.value.filter { it.hogwartsStudent },
+                            direction = direction,
+                            onCharacterClicked = {
+                                coreVM.onBottomSheetEvent(
+                                    BottomSheetEvents.OpenBottomSheet(
+                                        state = state,
+                                        scope = scope,
+                                        bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                        bottomSheetData = it
+                                    )
+                                )
+                            },
+                            onHouseClicked = {},
+                            onSeeAll = {}
                         )
                     }
                 }

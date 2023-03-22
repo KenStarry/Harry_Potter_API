@@ -33,6 +33,7 @@ import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.presentation.components.CoilImage
 import com.kenstarry.harrypotter.core.presentation.components.Lottie
 import com.kenstarry.harrypotter.core.presentation.components.PillBtn
+import com.kenstarry.harrypotter.core.presentation.components.WizardImage
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -70,58 +71,17 @@ fun DetailBottomSheet(
                 if (character.wizard) {
 
                     //  wizard image
-                    Box(
-                        modifier = Modifier
-                            .size(120.dp)
-                    ) {
-
-                        CoilImage(
-                            context = context,
-                            imageUri = character.image.toUri(),
-                            placeholder = com.kenstarry.harrypotter.R.drawable.ic_launcher_background,
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(120.dp)
-                                .border(
-                                    width = 3.dp,
-                                    color = MaterialTheme.colorScheme.primary,
-                                    shape = CircleShape
-                                )
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.Bottom
-                        ) {
-
-                            Box(
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .size(30.dp)
-                                    .background(MaterialTheme.colorScheme.onPrimary),
-                                contentAlignment = Alignment.Center
-                            ) {
-
-                                Icon(
-                                    imageVector = Icons.Outlined.StarRate,
-                                    contentDescription = "Star",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-
-                            }
-
-                        }
-
-                    }
+                    WizardImage(
+                        context = context,
+                        uri = character.image.toUri()
+                    )
 
                 } else {
                     //  image
                     CoilImage(
                         context = context,
                         imageUri = character.image.toUri(),
-                        placeholder = com.kenstarry.harrypotter.R.drawable.ic_launcher_background,
+                        placeholder = R.drawable.ic_launcher_background,
                         modifier = Modifier
                             .clip(CircleShape)
                             .size(120.dp)

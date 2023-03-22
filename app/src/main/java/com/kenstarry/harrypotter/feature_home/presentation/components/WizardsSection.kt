@@ -21,7 +21,8 @@ fun WizardsSection(
     modifier: Modifier = Modifier,
     direction: Direction,
     allWizards: List<CharacterModel>,
-    onWizardClicked: (character: CharacterModel) -> Unit
+    onWizardClicked: (character: CharacterModel) -> Unit,
+    onHouseClicked: (house: String) -> Unit
 ) {
 
     val listState = rememberLazyListState()
@@ -45,7 +46,7 @@ fun WizardsSection(
                 items(allWizards) { character ->
                     CharacterItem(
                         character = character,
-                        onHouseClicked = {},
+                        onHouseClicked = { onHouseClicked(character.house) },
                         onCharacterClicked = {
 
                             onWizardClicked(character)

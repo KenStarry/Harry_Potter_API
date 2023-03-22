@@ -23,6 +23,7 @@ import com.kenstarry.harrypotter.R
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.presentation.components.CoilImage
 import com.kenstarry.harrypotter.core.presentation.components.PillBtn
+import com.kenstarry.harrypotter.core.presentation.components.WizardImage
 
 @Composable
 fun CharacterItem(
@@ -54,14 +55,26 @@ fun CharacterItem(
             verticalArrangement = Arrangement.Center
         ) {
 
-            CoilImage(
-                context = context,
-                imageUri = character.image.toUri(),
-                placeholder = R.drawable.ic_launcher_background,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(80.dp)
-            )
+            if (character.wizard) {
+
+                //  wizard image
+                WizardImage(
+                    context = context,
+                    uri = character.image.toUri(),
+                    imageSize = 80.dp,
+                    starSize = 25.dp
+                )
+
+            } else {
+                CoilImage(
+                    context = context,
+                    imageUri = character.image.toUri(),
+                    placeholder = R.drawable.ic_launcher_background,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(80.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 

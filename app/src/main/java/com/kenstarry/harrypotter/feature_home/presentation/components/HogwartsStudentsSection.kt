@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Notes
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,8 +14,8 @@ import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.navigation.Direction
 
 @Composable
-fun HogwartsStaffSection(
-    allHogwartsStaff: List<CharacterModel>,
+fun HogwartsStudentsSection(
+    allHogwartsStudents: List<CharacterModel>,
     direction: Direction,
     onCharacterClicked: (character: CharacterModel) -> Unit,
     onHouseClicked: (house: String) -> Unit,
@@ -32,14 +32,14 @@ fun HogwartsStaffSection(
     ) {
 
         SectionTitle(
-            title = "Hogwarts Staff",
-            icon = Icons.Outlined.School,
+            title = "Hogwarts Students",
+            icon = Icons.Outlined.Person,
             onSeeAll = onSeeAll
         )
 
         LazyRow(
             content = {
-                items(allHogwartsStaff) {
+                items(allHogwartsStudents) {
                     CharacterItem(
                         character = it,
                         onCharacterClicked = { onCharacterClicked(it) },
