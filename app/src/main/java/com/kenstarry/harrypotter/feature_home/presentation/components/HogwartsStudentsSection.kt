@@ -40,7 +40,7 @@ fun HogwartsStudentsSection(
         LazyRow(
             content = {
                 items(allHogwartsStudents) {
-                    CharacterItem(
+                    CharacterItemAlt(
                         character = it,
                         onCharacterClicked = { onCharacterClicked(it) },
                         onHouseClicked = { onHouseClicked(it.house) }
