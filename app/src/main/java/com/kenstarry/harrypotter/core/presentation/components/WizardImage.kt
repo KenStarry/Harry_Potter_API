@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.StarRate
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +24,7 @@ fun WizardImage(
     context: Context,
     imageSize: Dp = 120.dp,
     starSize: Dp = 30.dp,
+    starIconSize: Dp = 16.dp,
     uri: Uri
 ) {
 
@@ -62,9 +64,11 @@ fun WizardImage(
             ) {
 
                 Icon(
-                    imageVector = Icons.Outlined.StarRate,
+                    imageVector = Icons.Outlined.Star,
                     contentDescription = "Star",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .size(starIconSize)
                 )
 
             }

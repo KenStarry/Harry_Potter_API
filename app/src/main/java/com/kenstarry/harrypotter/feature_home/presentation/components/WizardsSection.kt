@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +35,12 @@ fun WizardsSection(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
+        Icon(
+            imageVector = Icons.Outlined.Star,
+            contentDescription = "Star Icon",
+            tint = MaterialTheme.colorScheme.primary
+        )
 
         //  title
         Text(
@@ -68,7 +77,7 @@ fun WizardsSection(
             state = listState,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp),
+                .wrapContentHeight(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         )
 
