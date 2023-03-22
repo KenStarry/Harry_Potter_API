@@ -5,5 +5,6 @@ data class HarryPotterUseCases(
     val getStudents: GetStudents,
     val getAllStaff: GetAllStaff,
     val getSpells: GetSpells,
-    val getCharacter: GetCharacter
+    val getCharacter: GetCharacter,
+    val getCharactersInHouse: GetCharactersInHouse
 )

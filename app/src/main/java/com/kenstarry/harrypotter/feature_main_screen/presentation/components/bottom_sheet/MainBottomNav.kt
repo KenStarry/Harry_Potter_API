@@ -24,7 +24,7 @@ fun MainBottomNav(
 
     val screens = listOf(
         BottomNavScreens.Home,
-        BottomNavScreens.Characters,
+        BottomNavScreens.Houses,
         BottomNavScreens.Settings
     )
 

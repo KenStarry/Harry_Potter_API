@@ -2,7 +2,7 @@ package com.kenstarry.harrypotter.navigation.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.HomeWork
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.kenstarry.harrypotter.navigation.NavConstants
@@ -19,10 +19,10 @@ sealed class BottomNavScreens(
         title = "Home"
     )
 
-    object Characters : BottomNavScreens(
-        route = NavConstants.CHARACTER_SCREEN_ROUTE,
-        icon = Icons.Outlined.Movie,
-        title = "Characters"
+    object Houses : BottomNavScreens(
+        route = NavConstants.HOUSES_SCREEN_ROUTE,
+        icon = Icons.Outlined.HomeWork,
+        title = "Houses"
     )
 
     object Settings : BottomNavScreens(

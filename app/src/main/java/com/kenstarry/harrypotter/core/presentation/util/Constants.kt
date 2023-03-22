@@ -11,6 +11,7 @@ class Constants {
         const val STUDENTS_ENDPOINT = "characters/students"
         const val STAFF_ENDPOINT = "characters/staff"
         const val SPELLS_ENDPOINT = "spells"
+        const val HOUSES_ENDPOINT = "house/{houseName}"
 
         val alphabets = listOf(
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',

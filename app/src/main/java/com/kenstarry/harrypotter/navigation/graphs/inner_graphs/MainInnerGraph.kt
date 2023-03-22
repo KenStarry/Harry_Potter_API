@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
-import com.kenstarry.harrypotter.feature_characters.presentation.CharactersScreen
+import com.kenstarry.harrypotter.feature_houses.presentation.HousesScreen
 import com.kenstarry.harrypotter.feature_home.presentation.HomeScreen
 import com.kenstarry.harrypotter.feature_settings.presentation.SettingsScreen
 import com.kenstarry.harrypotter.navigation.screens.BottomNavScreens
@@ -38,8 +38,8 @@ fun MainInnerGraph(
             )
         }
 
-        composable(route = BottomNavScreens.Characters.route) {
-            CharactersScreen(navHostController)
+        composable(route = BottomNavScreens.Houses.route) {
+            HousesScreen(navHostController)
         }
 
         composable(route = BottomNavScreens.Settings.route) {

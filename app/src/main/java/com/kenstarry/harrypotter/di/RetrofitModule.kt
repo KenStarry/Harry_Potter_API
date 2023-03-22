@@ -53,7 +53,8 @@ object RetrofitModule {
         getStudents = GetStudents(harryPotterApi),
         getAllStaff = GetAllStaff(harryPotterApi),
         getSpells = GetSpells(harryPotterApi),
-        getCharacter = GetCharacter(harryPotterApi)
+        getCharacter = GetCharacter(harryPotterApi),
+        getCharactersInHouse = GetCharactersInHouse(harryPotterApi)
     )
 }
 
