@@ -1,16 +1,17 @@
 package com.kenstarry.harrypotter.feature_houses.presentation.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
+import android.view.RoundedCorner
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
@@ -28,9 +29,12 @@ fun HousesListItem(
 
     Column(
         modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
             .fillMaxWidth()
-            .wrapContentHeight(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .wrapContentHeight()
+            .background(MaterialTheme.colorScheme.onSecondary)
+            .padding(8.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
 
         Text(
@@ -54,7 +58,8 @@ fun HousesListItem(
             state = listState,
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         )
 
     }

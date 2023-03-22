@@ -37,7 +37,7 @@ fun WizardImage(
         CoilImage(
             context = context,
             imageUri = uri,
-            placeholder = R.drawable.ic_launcher_background,
+            placeholder = R.drawable.profile,
             modifier = Modifier
                 .clip(CircleShape)
                 .size(size = imageSize)

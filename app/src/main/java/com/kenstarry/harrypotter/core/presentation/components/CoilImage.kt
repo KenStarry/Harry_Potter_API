@@ -17,14 +17,22 @@ fun CoilImage(
     modifier: Modifier = Modifier,
     context: Context,
     imageUri: Uri?,
-    placeholder: Int
+    placeholder: Int = R.drawable.profile
 ) {
 
-    imageUri?.let {
+    if (imageUri?.toString()?.isBlank() == true || imageUri == null) {
 
+        Image(
+            painter = painterResource(id = R.drawable.profile),
+            contentDescription = "Profile image",
+            contentScale = ContentScale.Crop,
+            modifier = modifier
+        )
+
+    } else {
         AsyncImage(
             model = ImageRequest.Builder(context)
-                .data(it)
+                .data(imageUri)
                 .crossfade(true)
                 .placeholder(placeholder)
                 .build(),
@@ -32,6 +40,5 @@ fun CoilImage(
             contentScale = ContentScale.Crop,
             modifier = modifier
         )
-
     }
 }

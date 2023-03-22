@@ -69,7 +69,7 @@ fun CharacterItem(
                 CoilImage(
                     context = context,
                     imageUri = character.image.toUri(),
-                    placeholder = R.drawable.ic_launcher_background,
+                    placeholder = R.drawable.profile,
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(80.dp)

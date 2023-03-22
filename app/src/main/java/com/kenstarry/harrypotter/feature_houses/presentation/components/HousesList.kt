@@ -2,6 +2,7 @@ package com.kenstarry.harrypotter.feature_houses.presentation.components
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
@@ -72,8 +74,8 @@ fun HousesList(
         state = listState,
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
-            .background(MaterialTheme.colorScheme.onSecondary)
+            .wrapContentHeight(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     )
 
 
