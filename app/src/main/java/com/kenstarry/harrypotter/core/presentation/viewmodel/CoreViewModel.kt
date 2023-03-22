@@ -23,6 +23,7 @@ class CoreViewModel @Inject constructor(
 ) : ViewModel() {
 
     val harryPotterCharacters = MutableLiveData<Response<List<CharacterModel>>>()
+    val charactersInHouse = MutableLiveData<Response<List<CharacterModel>>>()
     val selectedCharacter = MutableLiveData<Response<CharacterModel>>()
     val hogwartsStudents = MutableLiveData<Response<List<CharacterModel>>>()
     val hogwartsStaff = MutableLiveData<Response<List<CharacterModel>>>()
@@ -63,6 +64,14 @@ class CoreViewModel @Inject constructor(
             is CoreEvents.GetStudents -> {
                 viewModelScope.launch {
                     hogwartsStudents.value = useCases.getStudents()
+                }
+            }
+
+            is CoreEvents.GetCharactersInHouse -> {
+                viewModelScope.launch {
+                    charactersInHouse.value = useCases.getCharactersInHouse(
+                        houseName = event.houseName
+                    )
                 }
             }
         }

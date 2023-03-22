@@ -1,17 +1,21 @@
 package com.kenstarry.harrypotter.feature_houses.presentation
 
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,6 +24,7 @@ import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
+import com.kenstarry.harrypotter.feature_houses.presentation.components.HousesList
 import com.kenstarry.harrypotter.feature_houses.presentation.components.HousesTopBar
 import com.kenstarry.harrypotter.navigation.Direction
 
@@ -32,6 +37,7 @@ fun HousesScreen(
     val coreVM: CoreViewModel = hiltViewModel()
     val directionInner = Direction(navHostController)
     val lifeCyclerOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
 
     val allCharacters = remember {
         mutableStateOf<List<CharacterModel>>(emptyList())
@@ -56,6 +62,8 @@ fun HousesScreen(
         }
     }
 
+    val allHouses = allCharacters.value.map { it.house }.distinct()
+
     Scaffold(
         topBar = {
             HousesTopBar(
@@ -74,8 +82,12 @@ fun HousesScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp)
+                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .padding(16.dp)
             ) {
+
+                //  display a list of all houses
+                HousesList(allHouses = allHouses)
 
             }
 

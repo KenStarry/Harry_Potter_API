@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PillBtn(
     title: String,
-    textColor: Color = Color.Black,
+    textColor: Color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f),
     startIcon: ImageVector? = null,
     endIcon: ImageVector? = null,
-    containerColor: Color = MaterialTheme.colorScheme.tertiary,
+    containerColor: Color = MaterialTheme.colorScheme.onSecondary,
     horizontalPadding: Dp = 16.dp,
     verticalPadding: Dp = 16.dp,
     onClick: () -> Unit

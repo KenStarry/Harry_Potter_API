@@ -7,4 +7,6 @@ sealed class CoreEvents {
     object GetAllStaff : CoreEvents()
     object GetSpells : CoreEvents()
     data class GetCharacter(val id: String) : CoreEvents()
+
+    data class GetCharactersInHouse(val houseName: String) : CoreEvents()
 }

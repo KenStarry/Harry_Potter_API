@@ -52,7 +52,6 @@ fun HomeScreen(
     }
 
     val responseObserver = remember {
-
         ResponseObserver() { response ->
 
             if (response.isSuccessful) {
@@ -71,7 +70,6 @@ fun HomeScreen(
             }
             Log.d("interceptor", response.message())
         }
-
     }
 
     coreVM.onEvent(CoreEvents.GetCharacters)

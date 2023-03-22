@@ -1,0 +1,80 @@
+package com.kenstarry.harrypotter.feature_houses.presentation.components
+
+import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.kenstarry.harrypotter.core.domain.model.CharacterModel
+import com.kenstarry.harrypotter.core.domain.model.CoreEvents
+import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
+import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
+
+@Composable
+fun HousesList(
+    allHouses: List<String>,
+    coreVM: CoreViewModel = hiltViewModel()
+) {
+
+    val listState = rememberLazyListState()
+    val lifeCyclerOwner = LocalLifecycleOwner.current
+
+    val allCharacters = remember {
+        mutableStateOf<List<CharacterModel>>(emptyList())
+    }
+
+    val responseObserver = remember {
+        ResponseObserver() { response ->
+            response.body()?.let {
+                allCharacters.value = it
+            }
+        }
+    }
+
+    DisposableEffect(lifeCyclerOwner, coreVM) {
+        coreVM.harryPotterCharacters.observe(lifeCyclerOwner, responseObserver)
+
+        onDispose {
+            coreVM.harryPotterCharacters.removeObserver(responseObserver)
+        }
+    }
+
+    //  observe characters in the specific house
+    coreVM.onEvent(CoreEvents.GetCharacters)
+
+    //  populate a list of houses
+    LazyColumn(
+        content = {
+            items(allHouses) { house ->
+
+                val charactersInHouse = allCharacters.value.filter { it.house == house }
+
+                //  lazy row to display all characters in that house
+                HousesListItem(
+                    houseName = house,
+                    charactersInHouse = charactersInHouse,
+                    onCharacterClicked = {},
+                    onHouseClicked = {}
+                )
+
+            }
+        },
+        state = listState,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .background(MaterialTheme.colorScheme.onSecondary)
+    )
+
+
+}
