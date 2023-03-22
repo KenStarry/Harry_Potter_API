@@ -21,10 +21,12 @@ import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.components.WizardsShimmer
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
+import com.kenstarry.harrypotter.feature_categories.presentation.util.CategoryConstants
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.*
 import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
 import com.kenstarry.harrypotter.navigation.Direction
+import com.kenstarry.harrypotter.navigation.screens.Screens
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
@@ -163,7 +165,13 @@ fun HomeScreen(
                                 )
                             },
                             onHouseClicked = {},
-                            onSeeAll = {}
+                            onSeeAll = {
+                                //  open category screen
+                                direction.navigateToRoute(
+                                    Screens.Category.passCategory(CategoryConstants.CATEGORY_STAFF),
+                                    null
+                                )
+                            }
                         )
 
                         //  hogwarts staff section
@@ -181,7 +189,13 @@ fun HomeScreen(
                                 )
                             },
                             onHouseClicked = {},
-                            onSeeAll = {}
+                            onSeeAll = {
+                                //  open category screen
+                                direction.navigateToRoute(
+                                    Screens.Category.passCategory(CategoryConstants.CATEGORY_STUDENT),
+                                    null
+                                )
+                            }
                         )
                     }
                 }

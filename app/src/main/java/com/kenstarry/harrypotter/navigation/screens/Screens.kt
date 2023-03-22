@@ -10,4 +10,9 @@ sealed class Screens(val route: String) {
         fun passCharacterModel(characterModelString: String) =
             "${NavConstants.DETAIL_SCREEN_ROUTE}/$characterModelString"
     }
+
+    object Category : Screens(route = "${NavConstants.CATEGORY_SCREEN_ROUTE}/{category}") {
+        fun passCategory(category: String) =
+            "${NavConstants.CATEGORY_SCREEN_ROUTE}/$category"
+    }
 }
