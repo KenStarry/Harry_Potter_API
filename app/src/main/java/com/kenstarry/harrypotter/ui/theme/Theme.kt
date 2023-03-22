@@ -16,8 +16,8 @@ private val DarkColorScheme = darkColorScheme(
     primary = accent,
     secondary = TextColorWhite,
     tertiary = accentLight,
-    onPrimary = BackgroundDark,
-    onSecondary = BackgroundDarkAlt
+    onPrimary = BackgroundDarkAlt,
+    onSecondary = BackgroundDark
 )
 
 private val LightColorScheme = lightColorScheme(
