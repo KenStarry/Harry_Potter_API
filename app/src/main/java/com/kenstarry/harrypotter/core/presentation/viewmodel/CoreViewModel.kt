@@ -4,6 +4,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +16,7 @@ import com.kenstarry.harrypotter.core.domain.use_case.HarryPotterUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -72,6 +74,24 @@ class CoreViewModel @Inject constructor(
                     charactersInHouse.value = useCases.getCharactersInHouse(
                         houseName = event.houseName
                     )
+                }
+            }
+
+            is CoreEvents.SearchForCharacters -> {
+                viewModelScope.launch {
+                    //  search for characters in the list of characters
+                    val allCharacters = event.allCharacters.toMutableList()
+                    val filteredList = mutableListOf<CharacterModel>()
+
+                    allCharacters.forEach { character ->
+                        //  compare the character with the query to see if they exist
+                        if (character.name.lowercase(Locale.ROOT).contains(event.query) ||
+                                character.house.lowercase(Locale.ROOT).contains(event.query)) {
+                            filteredList.add(character)
+                        }
+                    }
+
+                    event.filteredCharacters(filteredList)
                 }
             }
         }

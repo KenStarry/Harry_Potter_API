@@ -25,6 +25,7 @@ import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_categories.presentation.util.CategoryConstants
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_home.presentation.components.*
+import com.kenstarry.harrypotter.feature_home.presentation.components.search.SearchingScreen
 import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
 import com.kenstarry.harrypotter.navigation.Direction
 import com.kenstarry.harrypotter.navigation.screens.Screens
@@ -99,6 +100,7 @@ fun HomeScreen(
 
     AnimatedVisibility(visible = isSearching) {
         SearchingScreen(
+            allCharacters = allCharacters.value,
             onClearClicked = { isSearching = false }
         )
     }

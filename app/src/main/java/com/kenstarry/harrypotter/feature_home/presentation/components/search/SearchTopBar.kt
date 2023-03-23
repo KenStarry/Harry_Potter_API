@@ -21,7 +21,9 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchTopBar() {
+fun SearchTopBar(
+    onQueryInput: (query: String) -> Unit
+) {
 
     var query by remember {
         mutableStateOf("")
@@ -31,6 +33,7 @@ fun SearchTopBar() {
         value = query,
         onValueChange = { newQuery ->
             query = newQuery
+            onQueryInput(query)
         },
         leadingIcon = {
             Icon(
