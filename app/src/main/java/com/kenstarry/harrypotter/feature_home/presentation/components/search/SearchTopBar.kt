@@ -4,59 +4,49 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchTopBar(
-    onClearClicked: () -> Unit
-) {
+fun SearchTopBar() {
 
-    val query by remember {
+    var query by remember {
         mutableStateOf("")
     }
 
     TextField(
         value = query,
-        onValueChange = { onQueryChanged ->
-
+        onValueChange = { newQuery ->
+            query = newQuery
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Outlined.Search,
                 contentDescription = "Search icon",
-                tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f)
+                tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)
             )
-        },
-        trailingIcon = {
-
-            if (query.isBlank()) {
-                Icon(
-                    imageVector = Icons.Outlined.Clear,
-                    contentDescription = "Search icon",
-                    tint = MaterialTheme.colorScheme.error,
-                    modifier = Modifier
-                        .clickable { onClearClicked() }
-                )
-            }
         },
         maxLines = 1,
         colors = TextFieldDefaults.textFieldColors(
-            containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.3f)
+            containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.3f),
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.onPrimary,
+            focusedIndicatorColor = MaterialTheme.colorScheme.onPrimary,
+            focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.secondary,
+            textColor = MaterialTheme.colorScheme.secondary
         ),
         placeholder = {
             Text(text = "gryffindor, harry potter etc...")
@@ -68,8 +58,8 @@ fun SearchTopBar(
         ),
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
-            .fillMaxWidth()
-            .height(45.dp)
+            .fillMaxWidth(0.8f)
+            .wrapContentHeight()
     )
 }
 
