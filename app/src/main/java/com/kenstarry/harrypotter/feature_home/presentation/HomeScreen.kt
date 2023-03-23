@@ -1,6 +1,7 @@
 package com.kenstarry.harrypotter.feature_home.presentation
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -86,114 +87,130 @@ fun HomeScreen(
         mutableStateOf(false)
     }
 
+    var isSearching by remember {
+        mutableStateOf(false)
+    }
+
     //  check for error message
 
 //    AnimatedVisibility(visible = isErrorVisible.value) {
 //        ErrorMessage(message = "Connection timed out")
 //    }
 
-    IntroShowCaseScaffold(
-        showIntroShowCase = showAppIntro,
-        onShowCaseCompleted = { showAppIntro = false }
-    ) {
+    AnimatedVisibility(visible = isSearching) {
+        SearchingScreen(
+            onClearClicked = { isSearching = false }
+        )
+    }
 
-        Scaffold(
-            topBar = {
-                HomeTopBar(
-                    onSearch = {},
-                    onMore = {}
-                )
-            }
-        ) { contentPadding ->
+    AnimatedVisibility(visible = !isSearching) {
+        //  show main content
+        IntroShowCaseScaffold(
+            showIntroShowCase = showAppIntro,
+            onShowCaseCompleted = { showAppIntro = false }
+        ) {
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(contentPadding)
-            ) {
+            Scaffold(
+                topBar = {
+                    HomeTopBar(
+                        onSearch = {
+                            //   change screen to implement search
+                            isSearching = true
+                        },
+                        onMore = {}
+                    )
+                }
+            ) { contentPadding ->
 
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.onPrimary)
-                        .verticalScroll(rememberScrollState())
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                        .padding(contentPadding)
                 ) {
 
-                    //  wizards section
-                    if (allCharacters.value.isEmpty()) {
-                        //  show shimmer effects
-                        WizardsShimmer()
-                    } else {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.onPrimary)
+                            .verticalScroll(rememberScrollState())
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(24.dp)
+                    ) {
+
                         //  wizards section
-                        WizardsSection(
-                            allWizards = allCharacters.value.filter { it.wizard },
-                            direction = direction,
-                            modifier = Modifier
-                                .wrapContentHeight(),
-                            onWizardClicked = {
-                                coreVM.onBottomSheetEvent(
-                                    BottomSheetEvents.OpenBottomSheet(
-                                        state = state,
-                                        scope = scope,
-                                        bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
-                                        bottomSheetData = it
+                        if (allCharacters.value.isEmpty()) {
+                            //  show shimmer effects
+                            WizardsShimmer()
+                        } else {
+                            //  wizards section
+                            WizardsSection(
+                                allWizards = allCharacters.value.filter { it.wizard },
+                                direction = direction,
+                                modifier = Modifier
+                                    .wrapContentHeight(),
+                                onWizardClicked = {
+                                    coreVM.onBottomSheetEvent(
+                                        BottomSheetEvents.OpenBottomSheet(
+                                            state = state,
+                                            scope = scope,
+                                            bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                            bottomSheetData = it
+                                        )
                                     )
-                                )
-                            },
-                            onHouseClicked = {
+                                },
+                                onHouseClicked = {
 
-                            }
-                        )
+                                }
+                            )
 
-                        //  hogwarts staff section
-                        HogwartsStaffSection(
-                            allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
-                            direction = direction,
-                            onCharacterClicked = {
-                                coreVM.onBottomSheetEvent(
-                                    BottomSheetEvents.OpenBottomSheet(
-                                        state = state,
-                                        scope = scope,
-                                        bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
-                                        bottomSheetData = it
+                            //  hogwarts staff section
+                            HogwartsStaffSection(
+                                allHogwartsStaff = allCharacters.value.filter { it.hogwartsStaff },
+                                direction = direction,
+                                onCharacterClicked = {
+                                    coreVM.onBottomSheetEvent(
+                                        BottomSheetEvents.OpenBottomSheet(
+                                            state = state,
+                                            scope = scope,
+                                            bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                            bottomSheetData = it
+                                        )
                                     )
-                                )
-                            },
-                            onHouseClicked = {},
-                            onSeeAll = {
-                                //  open category screen
-                                direction.navigateToRoute(
-                                    Screens.Category.passCategory(CategoryConstants.CATEGORY_STAFF),
-                                    null
-                                )
-                            }
-                        )
-
-                        //  hogwarts staff section
-                        HogwartsStudentsSection(
-                            allHogwartsStudents = allCharacters.value.filter { it.hogwartsStudent },
-                            direction = direction,
-                            onCharacterClicked = {
-                                coreVM.onBottomSheetEvent(
-                                    BottomSheetEvents.OpenBottomSheet(
-                                        state = state,
-                                        scope = scope,
-                                        bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
-                                        bottomSheetData = it
+                                },
+                                onHouseClicked = {},
+                                onSeeAll = {
+                                    //  open category screen
+                                    direction.navigateToRoute(
+                                        Screens.Category.passCategory(CategoryConstants.CATEGORY_STAFF),
+                                        null
                                     )
-                                )
-                            },
-                            onHouseClicked = {},
-                            onSeeAll = {
-                                //  open category screen
-                                direction.navigateToRoute(
-                                    Screens.Category.passCategory(CategoryConstants.CATEGORY_STUDENT),
-                                    null
-                                )
-                            }
-                        )
+                                }
+                            )
+
+                            //  hogwarts staff section
+                            HogwartsStudentsSection(
+                                allHogwartsStudents = allCharacters.value.filter { it.hogwartsStudent },
+                                direction = direction,
+                                onCharacterClicked = {
+                                    coreVM.onBottomSheetEvent(
+                                        BottomSheetEvents.OpenBottomSheet(
+                                            state = state,
+                                            scope = scope,
+                                            bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                            bottomSheetData = it
+                                        )
+                                    )
+                                },
+                                onHouseClicked = {},
+                                onSeeAll = {
+                                    //  open category screen
+                                    direction.navigateToRoute(
+                                        Screens.Category.passCategory(CategoryConstants.CATEGORY_STUDENT),
+                                        null
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
