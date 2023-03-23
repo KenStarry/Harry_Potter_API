@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,14 +29,18 @@ import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_houses.presentation.components.HousesList
 import com.kenstarry.harrypotter.feature_houses.presentation.components.HousesTopBar
 import com.kenstarry.harrypotter.navigation.Direction
+import kotlinx.coroutines.CoroutineScope
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun HousesScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    coreVM: CoreViewModel,
+    state: ModalBottomSheetState,
+    scope: CoroutineScope
 ) {
 
-    val coreVM: CoreViewModel = hiltViewModel()
+//    val coreVM: CoreViewModel = hiltViewModel()
     val directionInner = Direction(navHostController)
     val lifeCyclerOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -87,7 +93,12 @@ fun HousesScreen(
             ) {
 
                 //  display a list of all houses
-                HousesList(allHouses = allHouses)
+                HousesList(
+                    allHouses = allHouses,
+                    coreVM = coreVM,
+                    state = state,
+                    scope = scope
+                )
 
             }
 

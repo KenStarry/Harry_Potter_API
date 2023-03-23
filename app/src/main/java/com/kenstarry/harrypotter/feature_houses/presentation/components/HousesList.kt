@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -17,15 +19,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kenstarry.harrypotter.core.domain.model.BottomSheetEvents
 import com.kenstarry.harrypotter.core.domain.model.CharacterModel
 import com.kenstarry.harrypotter.core.domain.model.CoreEvents
 import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
+import com.kenstarry.harrypotter.feature_home.presentation.util.HomeConstants
+import kotlinx.coroutines.CoroutineScope
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HousesList(
     allHouses: List<String>,
-    coreVM: CoreViewModel = hiltViewModel()
+    coreVM: CoreViewModel,
+    state: ModalBottomSheetState,
+    scope: CoroutineScope
 ) {
 
     val listState = rememberLazyListState()
@@ -65,7 +73,16 @@ fun HousesList(
                 HousesListItem(
                     houseName = house,
                     charactersInHouse = charactersInHouse,
-                    onCharacterClicked = {},
+                    onCharacterClicked = {
+                        coreVM.onBottomSheetEvent(
+                            BottomSheetEvents.OpenBottomSheet(
+                                state = state,
+                                scope = scope,
+                                bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                                bottomSheetData = it
+                            )
+                        )
+                    },
                     onHouseClicked = {}
                 )
 

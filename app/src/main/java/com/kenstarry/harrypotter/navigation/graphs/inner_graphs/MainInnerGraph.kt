@@ -39,7 +39,12 @@ fun MainInnerGraph(
         }
 
         composable(route = BottomNavScreens.Houses.route) {
-            HousesScreen(navHostController)
+            HousesScreen(
+                navHostController,
+                coreVM = coreViewModel,
+                state = modalSheetState,
+                scope = scope
+            )
         }
 
         composable(route = BottomNavScreens.Settings.route) {
