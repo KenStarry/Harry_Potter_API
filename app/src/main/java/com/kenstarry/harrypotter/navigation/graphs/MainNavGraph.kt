@@ -9,6 +9,7 @@ import com.kenstarry.harrypotter.core.presentation.viewmodel.CoreViewModel
 import com.kenstarry.harrypotter.feature_categories.presentation.CategoriesScreen
 import com.kenstarry.harrypotter.feature_detail.presentation.DetailScreen
 import com.kenstarry.harrypotter.feature_main_screen.presentation.MainScreen
+import com.kenstarry.harrypotter.feature_splash_screen.presentation.SplashScreen
 import com.kenstarry.harrypotter.navigation.NavConstants
 import com.kenstarry.harrypotter.navigation.screens.Screens
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +28,12 @@ fun NavGraphBuilder.mainNavGraph(
         startDestination = Screens.Main.route,
         route = NavConstants.MAIN_ROUTE
     ) {
+
+        composable(route = Screens.Splash.route) {
+            SplashScreen(
+                navHostController
+            )
+        }
 
         composable(route = Screens.Main.route) {
             MainScreen(

@@ -20,7 +20,7 @@ fun RootNavGraph(
 
     NavHost(
         navController = navHostController,
-        startDestination = NavConstants.MAIN_ROUTE
+        startDestination = NavConstants.SPLASH_ROUTE
     ) {
 
         mainNavGraph(
@@ -28,6 +28,10 @@ fun RootNavGraph(
             coreViewModel = coreViewModel,
             modalSheetState = modalSheetState,
             scope = scope
+        )
+
+        splashNavGraph(
+            navHostController = navHostController
         )
 
     }
