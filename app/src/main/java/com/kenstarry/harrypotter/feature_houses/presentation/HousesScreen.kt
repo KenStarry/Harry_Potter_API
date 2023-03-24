@@ -29,6 +29,7 @@ import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 import com.kenstarry.harrypotter.feature_houses.presentation.components.HousesList
 import com.kenstarry.harrypotter.feature_houses.presentation.components.HousesTopBar
 import com.kenstarry.harrypotter.navigation.Direction
+import com.kenstarry.harrypotter.navigation.screens.BottomNavScreens
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -74,7 +75,13 @@ fun HousesScreen(
         topBar = {
             HousesTopBar(
                 title = "Houses",
-                onBackPressed = {}
+                onBackPressed = {
+                    //  navigate back to home screen
+                    directionInner.navigateToRoute(
+                        BottomNavScreens.Home.route,
+                        BottomNavScreens.Home.route
+                    )
+                }
             )
         }
     ) { contentPadding ->

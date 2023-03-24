@@ -48,7 +48,7 @@ fun MainInnerGraph(
         }
 
         composable(route = BottomNavScreens.Settings.route) {
-            SettingsScreen(navHostController)
+            SettingsScreen(navHostController, mainNavHostController)
         }
 
     }
