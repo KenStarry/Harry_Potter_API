@@ -5,21 +5,16 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.lazy.staggeredgrid.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Dashboard
-import androidx.compose.material.icons.outlined.Handyman
-import androidx.compose.material.icons.outlined.StarRate
-import androidx.compose.material.icons.outlined.Timelapse
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +29,7 @@ import com.kenstarry.harrypotter.core.presentation.components.CoilImage
 import com.kenstarry.harrypotter.core.presentation.components.Lottie
 import com.kenstarry.harrypotter.core.presentation.components.PillBtn
 import com.kenstarry.harrypotter.core.presentation.components.WizardImage
+import com.kenstarry.harrypotter.feature_home.presentation.model.DetailModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -44,13 +40,30 @@ fun DetailBottomSheet(
     val context = LocalContext.current
 
     val aliasListState = rememberLazyStaggeredGridState()
+    val staggeredListState = rememberLazyStaggeredGridState()
+
+    //  details  list
+    val characterDetails = remember {
+        mutableListOf(
+            DetailModel("eye color", character.eyeColour, Icons.Outlined.Visibility),
+            DetailModel("ancestry", character.ancestry, Icons.Outlined.Timeline),
+            DetailModel("D.O.B", character.dateOfBirth, Icons.Outlined.CalendarMonth),
+            DetailModel("gender", character.gender, Icons.Outlined.Male),
+            DetailModel("patronous", character.patronus, Icons.Outlined.Male),
+            DetailModel("species", character.species, Icons.Outlined.Animation),
+            DetailModel("year of Birth", character.gender, Icons.Outlined.CalendarToday),
+            DetailModel("actor", character.gender, Icons.Outlined.Movie),
+            DetailModel("alive", character.gender, Icons.Outlined.HealthAndSafety),
+        )
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
         //  image section
@@ -97,7 +110,6 @@ fun DetailBottomSheet(
                     fontWeight = FontWeight.ExtraBold,
                     color = MaterialTheme.colorScheme.secondary
                 )
-
             }
 
             //  house section
@@ -220,6 +232,38 @@ fun DetailBottomSheet(
                 )
 
             }
+
+        }
+
+        //  further details section
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+
+            Text(
+                text = "Extra Details",
+                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)
+            )
+
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(2),
+                content = {
+                    items(characterDetails) { detail ->
+                        DetailCard(detail)
+                    }
+                },
+                state = staggeredListState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(500.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            )
 
         }
     }

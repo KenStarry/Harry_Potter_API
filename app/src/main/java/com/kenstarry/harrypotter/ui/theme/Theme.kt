@@ -24,8 +24,8 @@ private val LightColorScheme = lightColorScheme(
     primary = accent,
     secondary = TextColorBlack,
     tertiary = accentLight,
-    onPrimary = BackgroundLight,
-    onSecondary = BackgroundLightAlt
+    onPrimary = BackgroundLightAlt,
+    onSecondary = BackgroundLight
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),

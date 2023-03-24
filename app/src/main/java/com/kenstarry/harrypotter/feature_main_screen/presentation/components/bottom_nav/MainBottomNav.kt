@@ -1,4 +1,4 @@
-package com.kenstarry.harrypotter.feature_main_screen.presentation.components.bottom_sheet
+package com.kenstarry.harrypotter.feature_main_screen.presentation.components.bottom_nav
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
