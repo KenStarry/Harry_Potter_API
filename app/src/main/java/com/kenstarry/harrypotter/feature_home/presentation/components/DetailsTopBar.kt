@@ -28,6 +28,9 @@ fun DetailsTopBar(
                     tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f)
                 )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.onPrimary
+        )
     )
 }

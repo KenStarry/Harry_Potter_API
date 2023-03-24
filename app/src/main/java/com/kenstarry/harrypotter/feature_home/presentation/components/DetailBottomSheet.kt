@@ -67,6 +67,7 @@ fun DetailBottomSheet(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.onPrimary)
                 .padding(contentPadding)
         ) {
 
@@ -74,6 +75,7 @@ fun DetailBottomSheet(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
+                    .background(MaterialTheme.colorScheme.onPrimary)
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
