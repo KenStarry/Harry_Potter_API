@@ -24,29 +24,32 @@ fun SplashScreen(
 
     val direction = Direction(mainNavHostController)
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
 
         Lottie(
-            rawFile = R.raw.magician,
+            rawFile = R.raw.magician_nobg,
             isPlaying = true,
             iterations = Int.MAX_VALUE,
             modifier = Modifier
-                .weight(1f)
-                .wrapContentHeight()
+                .size(300.dp)
         )
+        
+        Spacer(modifier = Modifier.height(24.dp))
 
         //  text
         Text(
             text = "Hogwarts",
             fontSize = MaterialTheme.typography.titleMedium.fontSize,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.secondary
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier
+                .wrapContentSize()
         )
     }
 
