@@ -38,7 +38,14 @@ class MainActivity : ComponentActivity() {
 
                             HomeConstants.DETAILS_BOTTOM_SHEET -> {
                                 DetailBottomSheet(
-                                    character = coreVM.bottomSheetData.value as CharacterModel
+                                    character = coreVM.bottomSheetData.value as CharacterModel,
+                                    onBackPressed = {
+                                        //  close bottomsheet
+                                        coreVM.onBottomSheetEvent(BottomSheetEvents.CloseBottomSheet(
+                                            state = state,
+                                            scope = scope
+                                        ))
+                                    }
                                 )
                             }
                         }
