@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             
             val settingsViewModel: SettingsViewModel = hiltViewModel()
-            
+
+            //  setting theme using datastore
             HarryPotterTheme(
                 darkTheme = when (settingsViewModel.themeFlow.collectAsState(initial = "").value) {
                     SettingsConstants.themeOptions[0].title -> {
