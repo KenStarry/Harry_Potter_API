@@ -101,7 +101,17 @@ fun HomeScreen(
     AnimatedVisibility(visible = isSearching) {
         SearchingScreen(
             allCharacters = allCharacters.value,
-            onClearClicked = { isSearching = false }
+            onClearClicked = { isSearching = false },
+            onCharacterClicked = {
+                coreVM.onBottomSheetEvent(
+                    BottomSheetEvents.OpenBottomSheet(
+                        state = state,
+                        scope = scope,
+                        bottomSheetType = HomeConstants.DETAILS_BOTTOM_SHEET,
+                        bottomSheetData = it
+                    )
+                )
+            }
         )
     }
 

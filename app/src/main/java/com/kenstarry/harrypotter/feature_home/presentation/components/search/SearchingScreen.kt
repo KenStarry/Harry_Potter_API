@@ -34,7 +34,8 @@ import com.kenstarry.harrypotter.feature_home.domain.model.ResponseObserver
 @Composable
 fun SearchingScreen(
     allCharacters: List<CharacterModel>,
-    onClearClicked: () -> Unit
+    onClearClicked: () -> Unit,
+    onCharacterClicked: (character: CharacterModel) -> Unit
 ) {
 
     val coreVM: CoreViewModel = hiltViewModel()
@@ -129,14 +130,15 @@ fun SearchingScreen(
                     items(filteredCharacters.value) { character ->
                         SearchCharacterItem(
                             character = character,
-                            onCharacterClicked = { /*TODO*/ },
+                            onCharacterClicked = { onCharacterClicked(character) },
                             onHouseClicked = {}
                         )
                     }
                 },
                 state = listState,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             )
         }
 

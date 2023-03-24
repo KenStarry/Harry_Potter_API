@@ -47,7 +47,10 @@ fun SearchCharacterItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .background(MaterialTheme.colorScheme.onPrimary)
+                .padding(16.dp)
+                .clickable { onCharacterClicked() },
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -58,7 +61,7 @@ fun SearchCharacterItem(
                 WizardImage(
                     context = context,
                     uri = character.image.toUri(),
-                    imageSize = 50.dp,
+                    imageSize = 60.dp,
                     starSize = 16.dp
                 )
 
@@ -69,13 +72,14 @@ fun SearchCharacterItem(
                     placeholder = R.drawable.profile,
                     modifier = Modifier
                         .clip(CircleShape)
-                        .size(50.dp)
+                        .size(60.dp)
                 )
             }
 
             Column(
                 modifier = Modifier
-                    .weight(2f),
+                    .weight(2f)
+                    .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
